@@ -219,9 +219,9 @@ export default function DashboardPage() {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(v: number, _: string, props: { payload?: { shortName: string } }) => [
+                  formatter={(v, _, props) => [
                     `${v} deelnemers`,
-                    props.payload?.shortName ?? "",
+                    (props.payload as { shortName?: string })?.shortName ?? "",
                   ]}
                 />
               </PieChart>
@@ -262,9 +262,9 @@ export default function DashboardPage() {
                 <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
                 <YAxis domain={[0, 9]} tick={{ fontSize: 12, fill: "#64748b" }} />
                 <Tooltip
-                  formatter={(v: number, _: string, props: { payload?: { label: string } }) => [
+                  formatter={(v, _, props) => [
                     v,
-                    props.payload?.label ?? "",
+                    (props.payload as { label?: string })?.label ?? "",
                   ]}
                 />
                 <Bar dataKey="score" radius={[6, 6, 0, 0]} name="Gemiddelde">
@@ -292,7 +292,7 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="score" tick={{ fontSize: 11, fill: "#94a3b8" }} />
                 <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#94a3b8" }} />
-                <Tooltip formatter={(v: number) => [`${v} deelnemers`, "Aantal"]} />
+                <Tooltip formatter={(v) => [`${v} deelnemers`, "Aantal"]} />
                 <Bar dataKey="aantal" name="Deelnemers" radius={[4, 4, 0, 0]}>
                   {scoreDistData.map((entry, i) => {
                     const score = i + 6;
