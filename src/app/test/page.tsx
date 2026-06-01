@@ -50,9 +50,12 @@ export default function TestPage() {
       });
 
       if (saveError) {
-        console.error("Supabase write failed:", saveError);
+        console.error("Supabase write failed:", saveError.message, saveError);
         setError(
-          "Opslaan mislukt. Controleer je Supabase-configuratie en probeer het opnieuw."
+          saveError.message.includes("Failed to fetch") ||
+            saveError.message.includes("NetworkError")
+            ? "Kan Supabase niet bereiken. Controleer in Vercel of NEXT_PUBLIC_SUPABASE_URL op https://<project>.supabase.co staat (niet de secret key)."
+            : `Opslaan mislukt: ${saveError.message}`
         );
         setSubmitting(false);
         return;
