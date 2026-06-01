@@ -13,7 +13,7 @@ export default function ProgressBar({ current, total }: ProgressBarProps) {
       </div>
       <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-blue-500 to-teal-400 rounded-full transition-all duration-500 ease-out"
+          className="h-full bg-gradient-to-r from-kampen-blue to-kampen-teal rounded-full transition-all duration-500 ease-out"
           style={{ width: `${pct}%` }}
         />
       </div>
