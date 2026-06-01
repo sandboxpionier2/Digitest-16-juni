@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import ProgressBar from "@/components/ProgressBar";
 import Card from "@/components/Card";
 import { Button } from "@/components/Button";
@@ -42,7 +42,7 @@ export default function TestPage() {
       const total = theme1 + theme2;
       const profile: ProfileName = getProfileFromScore(total);
 
-      const { error: saveError } = await supabase.from("survey_results").insert({
+      const { error: saveError } = await getSupabase().from("survey_results").insert({
         theme_1_score: theme1,
         theme_2_score: theme2,
         total_score: total,

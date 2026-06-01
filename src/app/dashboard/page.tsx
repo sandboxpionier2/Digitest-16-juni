@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 import {
   PieChart,
   Pie,
@@ -56,7 +56,7 @@ export default function DashboardPage() {
     setLoading(true);
     setError(null);
     try {
-      const { data, error: fetchError } = await supabase
+      const { data, error: fetchError } = await getSupabase()
         .from("survey_results")
         .select("profile, theme_1_score, theme_2_score, total_score");
 
