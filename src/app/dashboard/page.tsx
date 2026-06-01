@@ -15,7 +15,7 @@ import {
   CartesianGrid,
   Legend,
 } from "recharts";
-import { Users, RefreshCw, AlertCircle } from "lucide-react";
+import { Users, RefreshCw, AlertCircle, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Card from "@/components/Card";
 import {
@@ -51,6 +51,9 @@ export default function DashboardPage() {
   const [results, setResults] = useState<SurveyResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [confirmClear, setConfirmClear] = useState(false);
+  const [clearing, setClearing] = useState(false);
+  const [clearError, setClearError] = useState<string | null>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -73,6 +76,27 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleClearResults = async () => {
+    setClearing(true);
+    setClearError(null);
+    try {
+      const res = await fetch("/api/dashboard/results", { method: "DELETE" });
+      const body = (await res.json()) as { error?: string };
+      if (!res.ok) {
+        throw new Error(body.error ?? "Wissen mislukt");
+      }
+      setResults([]);
+      setConfirmClear(false);
+    } catch (e) {
+      console.error(e);
+      setClearError(
+        e instanceof Error ? e.message : "Kon uitslagen niet wissen."
+      );
+    } finally {
+      setClearing(false);
+    }
+  };
 
   const total = results.length;
 
@@ -105,16 +129,80 @@ export default function DashboardPage() {
             Geaggregeerde, anonieme resultaten — Innovatieteam Gemeente Kampen
           </p>
         </div>
-        <button
-          type="button"
-          onClick={fetchData}
-          disabled={loading}
-          className="inline-flex items-center gap-2 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-kampen-teal"
-        >
-          <RefreshCw size={14} className={loading ? "animate-spin" : ""} aria-hidden />
-          Vernieuwen
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          {!loading && total > 0 && !confirmClear && (
+            <button
+              type="button"
+              onClick={() => {
+                setClearError(null);
+                setConfirmClear(true);
+              }}
+              className="inline-flex items-center gap-2 text-sm bg-white border border-red-200 hover:bg-red-50 text-red-700 font-medium px-4 py-2 rounded-lg transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-400"
+            >
+              <Trash2 size={14} aria-hidden />
+              Alle uitslagen wissen
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={fetchData}
+            disabled={loading || clearing}
+            className="inline-flex items-center gap-2 text-sm bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-kampen-teal"
+          >
+            <RefreshCw size={14} className={loading ? "animate-spin" : ""} aria-hidden />
+            Vernieuwen
+          </button>
+        </div>
       </div>
+
+      {confirmClear && (
+        <div
+          className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+          role="alertdialog"
+          aria-labelledby="clear-results-title"
+          aria-describedby="clear-results-desc"
+        >
+          <div>
+            <p id="clear-results-title" className="font-semibold text-amber-900 text-sm">
+              Alle {total} uitslagen permanent wissen?
+            </p>
+            <p id="clear-results-desc" className="text-amber-800 text-sm mt-0.5">
+              Dit kan niet ongedaan worden gemaakt. Handig om testdata op te schonen.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={() => setConfirmClear(false)}
+              disabled={clearing}
+              className="text-sm font-medium px-4 py-2 rounded-lg border border-amber-300 text-amber-900 hover:bg-amber-100 disabled:opacity-50"
+            >
+              Annuleren
+            </button>
+            <button
+              type="button"
+              onClick={handleClearResults}
+              disabled={clearing}
+              className="text-sm font-semibold px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white disabled:opacity-50"
+            >
+              {clearing ? "Bezig…" : "Ja, alles wissen"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {clearError && (
+        <div
+          className="bg-red-50 border border-red-100 rounded-2xl p-5 flex items-start gap-3"
+          role="alert"
+        >
+          <AlertCircle size={20} className="text-red-500 flex-shrink-0 mt-0.5" aria-hidden />
+          <div>
+            <p className="font-semibold text-red-700 text-sm">Wissen mislukt</p>
+            <p className="text-red-600 text-sm mt-0.5">{clearError}</p>
+          </div>
+        </div>
+      )}
 
       {error && (
         <div

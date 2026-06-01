@@ -26,7 +26,8 @@ export default function Home() {
         <div className="mt-10">
           <ButtonLink
             href="/test"
-            className="!bg-white !text-kampen-blue hover:!bg-blue-50 !shadow-lg text-lg px-8 py-4"
+            variant="hero"
+            className="text-lg px-8 py-4 min-w-[220px]"
             icon={<ArrowRight size={20} aria-hidden />}
           >
             Start de test

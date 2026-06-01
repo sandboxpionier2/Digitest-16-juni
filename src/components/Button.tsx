@@ -1,13 +1,15 @@
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "hero" | "ghost";
 
 const variants: Record<Variant, string> = {
   primary:
     "bg-gradient-to-r from-kampen-blue to-kampen-teal hover:from-kampen-blue-dark hover:to-kampen-teal-dark text-white shadow-lg shadow-blue-200/60",
   secondary:
     "border border-slate-200 bg-white hover:bg-slate-50 text-slate-700",
+  hero:
+    "bg-white text-kampen-blue hover:bg-blue-50 shadow-xl shadow-black/30 ring-2 ring-white/50 hover:shadow-2xl hover:ring-white/70",
   ghost: "text-slate-500 hover:text-slate-700 bg-transparent",
 };
 
