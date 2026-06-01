@@ -6,12 +6,12 @@ function getAuthSecret(): string {
   return (
     process.env.DASHBOARD_AUTH_SECRET ??
     process.env.DASHBOARD_PASSWORD ??
-    "Kampen800"
+    ""
   );
 }
 
 export function getDashboardPassword(): string {
-  return process.env.DASHBOARD_PASSWORD ?? "Kampen800";
+  return process.env.DASHBOARD_PASSWORD ?? "";
 }
 
 async function sign(message: string): Promise<string> {
