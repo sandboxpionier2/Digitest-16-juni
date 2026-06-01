@@ -36,7 +36,7 @@ export function Button({
 }: ButtonProps) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 font-semibold px-6 py-3 rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 ${variants[variant]} ${className}`}
+      className={`touch-target inline-flex items-center justify-center gap-2 font-semibold px-5 py-3 sm:px-6 rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:translate-y-0 ${variants[variant]} ${className}`}
       {...props}
     >
       {icon}
@@ -55,7 +55,7 @@ export function ButtonLink({
   return (
     <Link
       href={href}
-      className={`inline-flex items-center justify-center gap-2 font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:-translate-y-0.5 ${variants[variant]} ${className}`}
+      className={`touch-target inline-flex items-center justify-center gap-2 font-semibold px-5 py-3 sm:px-6 rounded-xl transition-all duration-200 sm:hover:-translate-y-0.5 ${variants[variant]} ${className}`}
     >
       {icon}
       {children}

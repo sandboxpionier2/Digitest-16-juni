@@ -44,7 +44,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-6 py-8 max-w-md mx-auto w-full">
+    <div className="flex flex-col items-center gap-6 py-4 sm:py-8 max-w-md mx-auto w-full min-w-0 px-1">
       <div className="text-center">
         <div className="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center mx-auto mb-4">
           <Lock size={24} className="text-kampen-teal" aria-hidden />
@@ -65,7 +65,7 @@ function LoginForm() {
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="current-password"
               required
-              className="rounded-xl border border-slate-200 px-4 py-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-kampen-teal/40 focus:border-kampen-teal"
+              className="rounded-xl border border-slate-200 px-4 py-3 text-base text-slate-800 focus:outline-none focus:ring-2 focus:ring-kampen-teal/40 focus:border-kampen-teal"
               placeholder="Wachtwoord"
             />
           </label>

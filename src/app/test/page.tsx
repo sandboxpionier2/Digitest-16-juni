@@ -81,12 +81,12 @@ export default function TestPage() {
   };
 
   return (
-    <div className="max-w-xl mx-auto flex flex-col gap-8">
+    <div className="max-w-xl mx-auto w-full min-w-0 flex flex-col gap-5 sm:gap-8">
       <ProgressBar current={step + 1} total={6} />
 
       {themeChanged && (
         <div
-          className="bg-gradient-to-r from-teal-50 to-blue-50 border border-teal-100 rounded-xl px-5 py-3 flex items-center gap-3"
+          className="bg-gradient-to-r from-teal-50 to-blue-50 border border-teal-100 rounded-xl px-4 py-3 sm:px-5 flex items-start sm:items-center gap-3"
           role="status"
         >
           <CheckCircle2 size={18} className="text-teal-500 flex-shrink-0" aria-hidden />
@@ -96,9 +96,9 @@ export default function TestPage() {
         </div>
       )}
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-start gap-2">
         <span
-          className={`text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full border ${
+          className={`inline-block text-[11px] sm:text-xs font-semibold uppercase tracking-wide sm:tracking-widest px-2.5 sm:px-3 py-1 rounded-full border leading-snug ${
             question.theme === 1
               ? "text-kampen-blue bg-blue-50 border-blue-100"
               : "text-kampen-teal bg-teal-50 border-teal-100"
@@ -109,7 +109,7 @@ export default function TestPage() {
       </div>
 
       <Card padding="lg" className="flex flex-col gap-6">
-        <h2 className="text-xl font-bold text-slate-800 leading-snug">
+        <h2 className="text-lg sm:text-xl font-bold text-slate-800 leading-snug">
           {question.text}
         </h2>
 
@@ -121,7 +121,7 @@ export default function TestPage() {
               type="button"
               onClick={() => setSelected(opt.score)}
               aria-pressed={selected === opt.score}
-              className={`flex items-start gap-4 text-left w-full rounded-xl border-2 px-5 py-4 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-kampen-teal focus-visible:ring-offset-2 ${
+              className={`touch-target flex items-start gap-3 sm:gap-4 text-left w-full rounded-xl border-2 px-4 py-3.5 sm:px-5 sm:py-4 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-kampen-teal focus-visible:ring-offset-2 ${
                 selected === opt.score
                   ? "border-kampen-teal bg-teal-50 text-slate-800 shadow-sm"
                   : "border-slate-100 bg-slate-50 text-slate-700 hover:border-teal-200 hover:bg-teal-50/40"
@@ -137,7 +137,7 @@ export default function TestPage() {
               >
                 {opt.label}
               </span>
-              <span className="text-sm leading-relaxed pt-0.5">{opt.text}</span>
+              <span className="text-sm sm:text-base leading-relaxed pt-0.5">{opt.text}</span>
             </button>
           ))}
         </fieldset>
@@ -152,13 +152,13 @@ export default function TestPage() {
         </div>
       )}
 
-      <div className="flex justify-between items-center gap-4">
+      <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-stretch sm:items-center gap-3 sm:gap-4 pb-2 sm:pb-0">
         <Button
           type="button"
           variant="ghost"
           onClick={handleBack}
           disabled={step === 0}
-          className="!px-3"
+          className="w-full sm:w-auto !px-3 justify-center"
           icon={<ChevronLeft size={16} aria-hidden />}
         >
           Vorige
@@ -168,6 +168,7 @@ export default function TestPage() {
           type="button"
           onClick={handleNext}
           disabled={selected === null || submitting}
+          className="w-full sm:w-auto justify-center"
           icon={!submitting ? <ChevronRight size={18} aria-hidden /> : undefined}
         >
           {submitting ? "Opslaan..." : isLast ? "Bekijk mijn profiel" : "Volgende"}

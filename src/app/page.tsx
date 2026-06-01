@@ -5,29 +5,29 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center gap-12 py-8">
+    <div className="flex flex-col items-center gap-8 sm:gap-12 py-4 sm:py-8 w-full min-w-0">
       {/* Hero */}
-      <section className="w-full max-w-3xl rounded-3xl bg-kampen-hero text-white px-8 py-14 sm:px-12 sm:py-16 text-center shadow-xl shadow-blue-900/20">
+      <section className="w-full max-w-3xl rounded-2xl sm:rounded-3xl bg-kampen-hero text-white px-5 py-10 sm:px-12 sm:py-16 text-center shadow-xl shadow-blue-900/20">
         <p className="inline-flex items-center gap-2 bg-white/15 text-white/95 text-sm font-medium px-4 py-1.5 rounded-full border border-white/20 mb-6">
           <Zap size={14} aria-hidden />
           Gemeente Kampen
         </p>
 
-        <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
           Hoe digitaal ben jij?
         </h1>
 
-        <p className="mt-6 text-lg text-blue-50/95 leading-relaxed max-w-xl mx-auto">
+        <p className="mt-4 sm:mt-6 text-base sm:text-lg text-blue-50/95 leading-relaxed max-w-xl mx-auto">
           Welkom bij deze korte, positieve zelftest. In een paar minuten ontdek je
           jouw digitale profiel binnen Gemeente Kampen — zonder goed of fout, volledig
           anoniem en met een helder beeld van waar jij staat in de digitale wereld.
         </p>
 
-        <div className="mt-10">
+        <div className="mt-8 sm:mt-10 w-full sm:w-auto px-1">
           <ButtonLink
             href="/test"
             variant="hero"
-            className="text-lg px-8 py-4 min-w-[220px]"
+            className="w-full sm:w-auto text-base sm:text-lg px-6 py-3.5 sm:px-8 sm:py-4"
             icon={<ArrowRight size={20} aria-hidden />}
           >
             Start de test
@@ -69,7 +69,7 @@ export default function Home() {
         ))}
       </div>
 
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-400 text-center px-2">
         Innovatieteam?{" "}
         <Link href="/dashboard" className="text-kampen-teal hover:underline font-medium">
           Bekijk het dashboard →

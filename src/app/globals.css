@@ -3,7 +3,27 @@
 @tailwind utilities;
 
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   :focus-visible {
     outline-color: #0d9488;
+  }
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+
+  .safe-bottom {
+    padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .touch-target {
+    min-height: 2.75rem;
+    touch-action: manipulation;
   }
 }

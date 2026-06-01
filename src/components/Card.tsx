@@ -7,9 +7,9 @@ type CardProps = {
 };
 
 const paddingMap = {
-  sm: "p-5",
-  md: "p-6",
-  lg: "p-8",
+  sm: "p-4 sm:p-5",
+  md: "p-5 sm:p-6",
+  lg: "p-5 sm:p-8",
 };
 
 export default function Card({
