@@ -187,9 +187,9 @@ export default function DashboardPage() {
                   ))}
                 </Pie>
                 <Tooltip
-                  formatter={(value: number, _name, item) => [
-                    `${value} deelnemer${value === 1 ? "" : "s"}`,
-                    (item.payload as { name: string }).name,
+                  formatter={(v, _, props) => [
+                    `${v ?? 0} deelnemer${v === 1 ? "" : "s"}`,
+                    (props.payload as { name?: string })?.name ?? "",
                   ]}
                 />
               </PieChart>
@@ -234,9 +234,9 @@ export default function DashboardPage() {
                 <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
                 <YAxis domain={[0, 9]} tick={{ fontSize: 12, fill: "#64748b" }} />
                 <Tooltip
-                  formatter={(value: number, _name, item) => [
-                    `${value} punten`,
-                    (item.payload as { subtitle: string }).subtitle,
+                  formatter={(v, _, props) => [
+                    `${v ?? 0} punten`,
+                    (props.payload as { subtitle?: string })?.subtitle ?? "",
                   ]}
                 />
                 <Legend />
