@@ -18,17 +18,17 @@ export const QUESTIONS: Question[] = [
     options: [
       {
         label: "A",
-        text: "Ik vertrouw op de expertise van de IT-helpdesk of een handige collega, zodat ik snel weer verder kan met mijn eigen werk.",
+        text: "Ik bel de helpdesk of vraag een collega om hulp.",
         score: 1,
       },
       {
         label: "B",
-        text: "Ik zoek eerst zelf even in de handleiding of probeer logisch na te denken, voordat ik hulp inschakel.",
+        text: "Ik klik net zolang totdat ik het gevonden heb.",
         score: 2,
       },
       {
         label: "C",
-        text: "Ik duik erin om de oorzaak te vinden, los het op, en kijk direct of we dit structureel kunnen verbeteren in ons proces.",
+        text: "Ik zoek het op in de handleiding of documentatie.",
         score: 3,
       },
     ],
@@ -89,12 +89,12 @@ export const QUESTIONS: Question[] = [
       },
       {
         label: "B",
-        text: "Ik gebruik steeds vaker een linkje naar een gedeeld document, maar vind bijlagen sturen soms ook nog wel zo overzichtelijk.",
+        text: "Ik gebruik steeds vaker een linkje naar een gedeeld bestand, maar stuur af en toe ook nog een bijlage.",
         score: 2,
       },
       {
         label: "C",
-        text: "Ik werk standaard samen in de cloud (zoals in Teams); we typen tegelijk in hetzelfde bestand en reageren direct op elkaars opmerkingen.",
+        text: "We werken standaard samen in Microsoft 365.",
         score: 3,
       },
     ],

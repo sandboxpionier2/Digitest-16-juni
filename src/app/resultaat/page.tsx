@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Suspense, type ReactNode } from "react";
 import { Home, Compass, Rocket, Star } from "lucide-react";
 import Card from "@/components/Card";
+import KlooisessieSignup from "@/components/KlooisessieSignup";
 import {
   PROFILE_CONTENT,
   getProfileFromScore,
@@ -60,6 +61,13 @@ function ResultContent() {
       <Card padding="lg" className="w-full text-left">
         <p className="text-slate-700 leading-relaxed text-base">{content.message}</p>
       </Card>
+
+      <div className="w-full border-t border-slate-100 pt-2">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 text-center mb-4">
+          Wil je verder groeien?
+        </p>
+        <KlooisessieSignup />
+      </div>
 
       <Link
         href="/"

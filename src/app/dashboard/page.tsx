@@ -16,6 +16,7 @@ import {
   Legend,
 } from "recharts";
 import { Users, RefreshCw, AlertCircle, Trash2 } from "lucide-react";
+import { SESSIONS, MAX_SPOTS } from "@/lib/sessions";
 import Link from "next/link";
 import Card from "@/components/Card";
 import {
@@ -23,6 +24,12 @@ import {
   PROFILE_COLORS,
   type ProfileName,
 } from "@/lib/survey";
+
+type KlooisessieRegistration = {
+  name: string;
+  email: string;
+  session_ids: string[];
+};
 
 type SurveyResult = {
   profile: ProfileName | string;
@@ -48,12 +55,14 @@ function normalizeProfile(raw: string): ProfileName | null {
 }
 
 export default function DashboardPage() {
-  const [results, setResults] = useState<SurveyResult[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [confirmClear, setConfirmClear] = useState(false);
-  const [clearing, setClearing] = useState(false);
-  const [clearError, setClearError] = useState<string | null>(null);
+  const [results, setResults]             = useState<SurveyResult[]>([]);
+  const [loading, setLoading]             = useState(true);
+  const [error, setError]                 = useState<string | null>(null);
+  const [confirmClear, setConfirmClear]   = useState(false);
+  const [clearing, setClearing]           = useState(false);
+  const [clearError, setClearError]       = useState<string | null>(null);
+  const [klooisessies, setKlooisessies]   = useState<KlooisessieRegistration[]>([]);
+  const [klooisessiesLoading, setKlooisessiesLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
@@ -75,6 +84,16 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    getSupabase()
+      .from("klooisessie_registrations")
+      .select("name, email, session_ids")
+      .then(({ data }) => {
+        setKlooisessies((data ?? []) as KlooisessieRegistration[]);
+        setKlooisessiesLoading(false);
+      });
   }, []);
 
   const handleClearResults = async () => {
@@ -342,6 +361,63 @@ export default function DashboardPage() {
           </Card>
         </div>
       )}
+
+      {/* Klooisessies */}
+      <div className="flex flex-col gap-4">
+        <div>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-800">Klooisessies</h2>
+          <p className="text-slate-500 text-sm mt-1">
+            Klooisessie – Digitale innovatie · Kampereiland · max. {MAX_SPOTS} plekken per sessie
+          </p>
+        </div>
+        {klooisessiesLoading ? (
+          <p className="text-slate-400 text-sm">Laden…</p>
+        ) : (
+          <div className="flex flex-col gap-3">
+            {SESSIONS.map((s) => {
+              const registrants = klooisessies.filter((r) => r.session_ids.includes(s.id));
+              const taken = registrants.length;
+              const full  = taken >= MAX_SPOTS;
+              return (
+                <Card key={s.id}>
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <p className="font-bold text-slate-800">{s.label}</p>
+                      <p className="text-xs text-slate-400 mt-0.5">{s.date} · {s.start}–{s.end}</p>
+                    </div>
+                    <span className={`text-sm font-bold px-3 py-1 rounded-full ${
+                      full ? "bg-red-100 text-red-600" : taken === 0 ? "bg-slate-100 text-slate-400" : "bg-green-100 text-green-700"
+                    }`}>
+                      {taken}/{MAX_SPOTS}
+                    </span>
+                  </div>
+                  <div className="w-full h-1.5 bg-slate-100 rounded-full mb-3">
+                    <div
+                      className={`h-1.5 rounded-full ${full ? "bg-red-400" : "bg-teal-400"}`}
+                      style={{ width: `${(taken / MAX_SPOTS) * 100}%` }}
+                    />
+                  </div>
+                  {registrants.length === 0 ? (
+                    <p className="text-sm text-slate-400">Nog geen inschrijvingen</p>
+                  ) : (
+                    <ul className="flex flex-col gap-1.5">
+                      {registrants.map((r, i) => (
+                        <li key={`${r.email}-${i}`} className="flex items-center gap-2 text-sm">
+                          <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-500 text-xs flex items-center justify-center font-medium flex-shrink-0">
+                            {i + 1}
+                          </span>
+                          <span className="font-medium text-slate-700">{r.name}</span>
+                          <span className="text-slate-400">{r.email}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
